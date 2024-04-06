@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News Aggregator</title>
+</head>
+<body>
+    <h1>Select your interests</h1>
+    <form method="POST" action="/">
+        {% for interest in interests %}
+            <div>
+                <input type="checkbox" name="interests" value="{{ interest }}">
+                <label for="{{ interest }}">{{ interest }}</label>
+            </div>
+        {% endfor %}
+        <button type="submit">Get News</button>
+    </form>
+</body>
+</html>

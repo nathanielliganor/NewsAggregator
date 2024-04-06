@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Personalized News</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .news-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .news-item h3 {
+            margin: 0;
+            color: #333;
+        }
+        .news-item p {
+            margin: 10px 0;
+        }
+        .news-item a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .news-item a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Personalized News</h1>
+    <div>
+        {% if news_items %}
+            {% for item in news_items %}
+                <div class="news-item">
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.summary }}</p>
+                    <a href="{{ item.url }}" target="_blank">Read more</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No news found for your interests. Please try different interests.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
