@@ -1,4 +1,3 @@
-import openai
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import timedelta
 import requests
@@ -14,7 +13,7 @@ app.config['SESSION_PERMANENT'] = False
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
 
 # News Topics of Interests
-interests = ["Technology", "Sports", "Politics", "Entertainment"]
+interests = ["Technology", "Sports", "Politics", "Entertainment", "Finance", "Business", "Health"]
 
 @app.route('/', methods=['GET', 'POST'])
 def hello():
@@ -27,16 +26,6 @@ def hello():
 
     # Display the form with interests checkboxes
     return render_template('index.html', interests=interests)
-
-'''
-# To use the stored interests in the session
-@app.route('/news')
-def show_news():
-    # Getting user interests from the session
-    user_interests = session.get("user_interests", [])
-    # Get and display news based on the selected interests
-    return render_template('news.html', interests=user_interests, news_items=news_items)
-'''
 
 # Calling a news API and filtering the results
 # https://newsapi.org/v2/everything?q=Apple&from=2024-04-05&sortBy=popularity&apiKey=API_KEY
@@ -67,9 +56,6 @@ def fetch_news(interests):
     return news_items
 
 # Summarize News Articles Using OpenAI API
-
-#openai.api_key = "voc-1599995263104020273543565f0c5c9db1643.85936589"
-
 client = OpenAI(base_url="https://openai.vocareum.com/v1", api_key="voc-1599995263104020273543565f0c5c9db1643.85936589")
 
 def summarize_text(text):
@@ -80,7 +66,9 @@ def summarize_text(text):
             {"role": "user", "content": f"Summarize the following news article: {text}. "
                                         f"Do not mention that you are an AI on the news summary. "
                                         f"If there are errors, find some work around with the summary. "
-                                        f"Only present newspaper like news summaries."},
+                                        f"Only present newspaper like news summaries."
+                                        f"If there is a lack of information or you are unable to create a news summary,"
+                                        f"direct the user to click the link for more information."},
         ]
     ))
     return response.choices[0].message.content
@@ -120,4 +108,4 @@ def show_news():
     return render_template('news.html', interests=user_interests, news_items=news_items)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=False)

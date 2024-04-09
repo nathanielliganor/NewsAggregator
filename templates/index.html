@@ -2,18 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News Aggregator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+        header {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .news-topics {
+            margin: 20px 0;
+        }
+        .news-topic {
+            margin: 10px 0;
+        }
+        .news-topic label {
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Select your interests</h1>
-    <form method="POST" action="/">
-        {% for interest in interests %}
-            <div>
-                <input type="checkbox" name="interest" value="{{ interest }}">
-                <label for="{{ interest }}">{{ interest }}</label>
-            </div>
-        {% endfor %}
-        <button type="submit">Get News</button>
-    </form>
+    <div class="container">
+        <header>
+        <h1>News Aggregator</h1>
+        <h2>Select Your News Topics</h2>
+        </header>
+        <section class="news-topics">
+        <form method="POST" action="/">
+            {% for interest in interests %}
+                <div class="news-topics">
+                    <input type="checkbox" name="interest" value="{{ interest }}">
+                    <label for="{{ interest }}">{{ interest }}</label>
+                </div>
+            {% endfor %}
+            <button type="submit">Get News</button>
+        </form>
+        </section>
+    </div>
 </body>
 </html>
